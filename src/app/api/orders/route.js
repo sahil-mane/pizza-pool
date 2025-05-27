@@ -1,29 +1,29 @@
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
-import { authOptions , isAdmin } from "../auth/[...nextauth]/route";
-import {Orders} from "../../../models/Orders"
+import { authOptions, isAdmin } from "../auth/[...nextauth]/route";
+import { Orders } from "../../../models/Orders";
+import UserInfo from "../../../models/UserInfo";
+import User from "../../../models/User";
 
-export async function POST(req)
-{
-    mongoose.connect(process.env.MONGO_URL);
-    const data = await req.json();
-    const session = await getServerSession(authOptions);
-    const userEmail = session?.user?.email;
-    console.log("datttta==>>",data);
+export async function POST(req) {
+  mongoose.connect(process.env.MONGO_URL);
+  const data = await req.json();
+  const session = await getServerSession(authOptions);
+  const userEmail = session?.user?.email;
+  console.log("datttta==>>", data);
 
-    const Cartorder = await Orders.create({
-        userEmail:userEmail,
-        phone:data?.phone,
-        city:data?.city,
-        country:data?.country,
-        pinCode:data?.postalCode,
-        streetAddress:data?.streetAddress,
-        cartProducts:data?.cartProducts,
-        paid:data?.paid
+  const Cartorder = await Orders.create({
+    userEmail: userEmail,
+    phone: data?.phone,
+    city: data?.city,
+    country: data?.country,
+    pinCode: data?.postalCode,
+    streetAddress: data?.streetAddress,
+    cartProducts: data?.cartProducts,
+    paid: data?.paid,
+  });
 
-    })
-
-    return Response.json(Cartorder);
+  return Response.json(Cartorder);
 }
 
 export async function GET(req)

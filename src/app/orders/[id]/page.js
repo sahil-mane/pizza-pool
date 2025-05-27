@@ -2,12 +2,13 @@
 import { useContext, useEffect, useState } from "react";
 import { SectionHeaders } from "../../../components/layout/SectionHeaders";
 import { CartContext, cartProductPrice } from "../../../components/AppContext";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Trash from "../../../components/icons/Trash";
 
+
 export default function OrderPage() {
-  const { clearCart, removeCartProduct } = useContext(CartContext);
+  const { clearCart, removeCartProduct, setViewMessagefalse,viewMessagefalse } = useContext(CartContext);
   const [order, setOrder] = useState();
   const [loadingOrder, setLoadingOrder] = useState(true);
   const [phone, setPhone] = useState("");
@@ -17,16 +18,37 @@ export default function OrderPage() {
   const [country, setCountry] = useState("");
   const [viewMessage, setViewMessage] = useState(false);
 
+  const router = useRouter();
+
   let { id } = useParams();
 
   useEffect(() => {
-    setViewMessage(true); // Reset viewMessage whenever id changes
+    if(viewMessagefalse == "true")
+    {
+      setViewMessage(false);// Reset viewMessage whenever id changes
+    }
+    else{
+      setViewMessage(true); // Reset viewMessage whenever id changes
+    }
     const timer = setTimeout(() => {
       setViewMessage(false);
-    }, 3000);
+    }, 6000);
 
     return () => clearTimeout(timer); // Cleanup timeout on unmount
   }, [id]);
+
+  console.log("viewMessagefalse",viewMessagefalse)
+  // useEffect(() => {
+  //  if (viewMessagefalse === false) {
+  //   setViewMessage(false);
+  // }   
+  //   setViewMessage(true);
+  //   const timer = setTimeout(() => {
+  //     setViewMessage(false);
+  //   }, 3000);
+  //   return () => clearTimeout(timer);
+  
+  // }, [id]);
 
   useEffect(() => {
     if (window.location.href.includes("clear-cart-1")) {
@@ -199,6 +221,7 @@ export default function OrderPage() {
           </div>
         </div>
       )}
+      {!viewMessage && <button onClick={()=>router.push("/")} >Go Home</button>}
     </section>
   );
 }

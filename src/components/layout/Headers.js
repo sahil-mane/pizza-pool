@@ -4,23 +4,36 @@ import Link from "next/link";
 import React, { useContext } from "react";
 import { CartContext } from "../AppContext";
 import ShoppingCart from '../icons/ShoppingCart.js'
+import { usePathname, useRouter } from "next/navigation";
 
 export const Headers = () => {
-  const session = useSession();
-  console.log(session);
-  const status = session.status;
-  const userData = session.data?.user;
-  let username = userData?.name || userData?.email;
+  // const session = useSession();
+  const { data: session, status } = useSession();
+  console.log(session, status);
+  // console.log("session====>>>>",session);
+  // const status = session.status;
+  // const userData = session.data?.user;
+  const userData = session?.user;
+  let username = userData?.name || userData?.email || "";
   if(username && username.includes(' '))
   {
     username = username.split(" ")[0]
   }
   const {cartProducts} = useContext(CartContext);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () =>{
+   signOut({ callbackUrl: "/" });
+  }
+  
+  console.log("---->>>",pathname)
+
   return (
     <header className="flex items-center justify-between">
       <nav className="flex items-center gap-8 text-gray-500 font-semibold">
-        <Link href="/" className="text-primary font-semibold text-2xl">
-          ST PIZZA
+        <Link href="/" className="text-primary font-semibold text-2xl uppercase">
+          Slice Haven
         </Link>
         <Link href="/">Home</Link>
         <Link href="/menu">Menu</Link> 
@@ -34,7 +47,7 @@ export const Headers = () => {
           <button
             href=""
             className="bg-primary text-white rounded-full px-8 py-2"
-            onClick={()=> signOut()}
+            onClick={()=> handleLogout()}
           >
             Logout
           </button>

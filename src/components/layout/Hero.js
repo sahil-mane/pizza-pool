@@ -2,9 +2,20 @@ import Image from 'next/image'
 import React from 'react'
 import Pizza from '../../../public/pizza.png'
 import { Right } from '../icons/Right'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/router'
 
 
-export const Hero = () => {
+export const Hero = () => {   
+    const {data,status} = useSession();
+    const router = useRouter();
+    console.log({data,status})
+
+    const handleNavigate = () => {
+       return status == 'authenticated' ? router.push("/menu") : router.push("/login");       
+    }
+
   return (
     <section className="hero">
         <div className="py-16">
@@ -16,7 +27,7 @@ export const Hero = () => {
             </h1>
             <p className="my-6 text-gray-500 text-sm">Pizza is the missing piece that makes every day complete, a simple yet delicious joy in life </p>
             <div className="flex gap-4 text-sm">
-                <button className="bg-primary uppercase flex items-center justify-center gap-2 text-white px-4 py-2 rounded-full">
+                <button className="bg-primary uppercase flex items-center justify-center gap-2 text-white px-4 py-2 rounded-full" onClick={()=>handleNavigate()}>
                     Order now 
                     <Right colors={'white'} />
                 </button>

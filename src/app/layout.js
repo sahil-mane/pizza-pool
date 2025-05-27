@@ -4,6 +4,7 @@ import { Headers } from "../components/layout/Headers";
 import { SessionProvider } from "next-auth/react";
 import { AppProvider } from "../components/AppContext";
 import { Toaster } from 'react-hot-toast';
+import pizzaFavicon from "../../public/Pizza_icon.jpeg"
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -15,6 +16,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <title>Slice Haven</title>
+        <link rel="icon" href="/Pizza_icon_2.jpeg" type="image/jpeg" />
+      </head>
       <body className={roboto.className}>
         <div className="max-w-6xl mx-auto p-4">
           <AppProvider>

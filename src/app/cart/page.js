@@ -52,12 +52,12 @@ export default function CartPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            phone:phone,
-            streetAddress:streetAddress,
-            city:city,
-            postalCode:postalCode,
-            country:country,
-            cartProducts:cartProducts,
+            phone: phone,
+            streetAddress: streetAddress,
+            city: city,
+            postalCode: postalCode,
+            country: country,
+            cartProducts: cartProducts,
             paid: paidStatus,
           }),
         });
@@ -123,7 +123,7 @@ export default function CartPage() {
                   )}
                 </div>
                 <div className="text-lg font-semibold">
-                ₹{cartProductPrice(product)}
+                  ₹{cartProductPrice(product)}
                 </div>
                 <div className="ml-2">
                   <button
@@ -205,8 +205,9 @@ export default function CartPage() {
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
-            <button type="submit">Pay ₹{total}</button>
+            <button className={cartProducts?.length === 0? `hidden`:``} type="submit">Pay ₹{total}</button>
           </form>
+            <button className={cartProducts?.length !== 0? `hidden`:``} type="submit" onClick={()=>{router.push("/")}}>Go Home</button>
         </div>
       </div>
       {paymentPopUp && (
@@ -232,7 +233,7 @@ export default function CartPage() {
               <button
                 type="button"
                 className="bg-primary rounded-full  text-white"
-                 onClick={handlePayFordelivery}
+                onClick={handlePayFordelivery}
               >
                 yes,proceed
               </button>

@@ -60,10 +60,12 @@ export function AppProvider({ children }) {
         })
     }
 
+    const [viewMessagefalse, setViewMessagefalse] = useState(null);
+
   return (
     <SessionProvider>
       <CartContext.Provider value={{
-        cartProducts, setCartProducts,addToCart,removeCartProduct,clearCart
+        cartProducts, setCartProducts,addToCart,removeCartProduct,clearCart,viewMessagefalse,setViewMessagefalse
       }}>
         {children}
       </CartContext.Provider>

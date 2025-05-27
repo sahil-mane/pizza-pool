@@ -13,9 +13,7 @@ export const HomeMenu = () => {
     fetch("/api/menu-items")
     .then(response => response.json())
     .then(data => setBestSeller(data.data) )
-  },[]);
-
-  console.log(bestSeller)
+  },[]);  
 
   return (
     <section>
@@ -46,7 +44,7 @@ export const HomeMenu = () => {
       </div>
       <div className="grid grid-cols-3 gap-4">
         {
-          bestSeller.slice(-3).map((item, index) => (
+          bestSeller?.slice(-3).map((item, index) => (
             <MenuItem {...item} />
 
           ))
